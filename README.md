@@ -2,7 +2,7 @@
 
 ¡Bienvenido a **MyBalance**! Esta herramienta es una solución digital diseñada para tomar el control absoluto de tus finanzas personales de una forma rápida, clara y completamente estructurada.
 
-Desarrollado como un gestor de gastos de uso personal (estilo hoja de cálculo), MyBalance te permite registrar y monitorear tus movimientos económicos sin las complicaciones ni los riesgos de las plataformas financieras automatizadas. **No requiere ni incluye conexiones con cuentas bancarias reales**, garantizando así la máxima privacidad y control de tus datos.
+Desarrollado como un gestor de gastos de uso personal, MyBalance te permite registrar y monitorear tus movimientos económicos sin las complicaciones ni los riesgos de las plataformas financieras automatizadas. **No requiere ni incluye conexiones con cuentas bancarias reales**, garantizando así la máxima privacidad y control de tus datos.
 
 ---
 
