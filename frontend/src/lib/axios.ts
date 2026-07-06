@@ -6,7 +6,7 @@ import axios from 'axios';
 //Le decimos que todas las peticiones iran automaticamente a backend local
 
 const api = axios.create({
-    baseURL: 'https://tu-backend-en-render.onrender.com/api',
+    baseURL: 'https://mybalance-u58l.onrender.com',
 });
 
 //El interceptor (Mnesaje Automatico)
