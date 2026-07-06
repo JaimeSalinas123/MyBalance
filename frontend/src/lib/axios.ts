@@ -6,7 +6,7 @@ import axios from 'axios';
 //Le decimos que todas las peticiones iran automaticamente a backend local
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'mybalance-xi.vercel.app',
 });
 
 //El interceptor (Mnesaje Automatico)
