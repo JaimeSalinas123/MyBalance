@@ -2,6 +2,8 @@
 
 // TS: Además de express, importamos los tipos 'Request' y 'Response' como documentación
 import express, { Request, Response } from 'express';
+import { verificarToken, AuthRequest } from './middlewares/auth.js';
+
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -104,15 +106,12 @@ app.post('/api/auth/login', (req: Request<{}, {}, LoginBody>, res: Response) => 
 });
 
 //Guardar nuevas transacciones
-// TS: Usamos Request<{}, {}, TransaccionBody> para indicarle a Express que el req.body 
-// debe cumplir obligatoriamente con el contrato de la interfaz que creamos arriba.
-
-app.post('/api/transacciones', (req: Request<{}, {}, TransaccionBody>, res: Response) => {
+// TS: Cambiamos Request por AuthRequest para poder usar req.user. Añadimos el middleware verificarToken.
+app.post('/api/transacciones', verificarToken, (req: AuthRequest, res: Response) => {
   const { tipo, concepto, monto, fecha } = req.body;
   
-  // Temporalmente dejamos el user_id como null o fijo hasta que el frontend envíe el token.
-  // En el siguiente paso crearemos un Middleware para interceptar el token automáticamente.
-  const user_id: number | null = 1; 
+  // Extraemos el id real del usuario desde el token desencriptado
+  const user_id = req.user.id; 
 
   const query = `INSERT INTO transacciones (user_id, tipo, concepto, monto, fecha) VALUES (?, ?, ?, ?, ?)`;
   
@@ -122,23 +121,35 @@ app.post('/api/transacciones', (req: Request<{}, {}, TransaccionBody>, res: Resp
   });
 });
 
-// ── 4. OBTENER TODAS LAS TRANSACCIONES (GET) ──
-app.get('/api/transacciones', (req: Request, res: Response) => {
-  const query = `SELECT * FROM transacciones ORDER BY id DESC`;
+//Obtener todas las transacciones (GET)
+// TS: Agregamos verificarToken y cambiamos Request a AuthRequest
+app.get('/api/transacciones', verificarToken, (req: AuthRequest, res: Response) => {
+  const user_id = req.user.id;
   
-  db.all(query, [], (err: Error | null, rows: any[]) => {
+  // Filtramos en la base de datos para que el usuario solo vea sus propios registros
+  const query = `SELECT * FROM transacciones WHERE user_id = ? ORDER BY id DESC`;
+  
+  db.all(query, [user_id], (err: Error | null, rows: any[]) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
 });
 
 //Eliminar transacciones DELETE
-app.delete('/api/transacciones/:id', (req: Request, res: Response) => {
+// TS: Agregamos verificarToken y cambiamos Request a AuthRequest
+app.delete('/api/transacciones/:id', verificarToken, (req: AuthRequest, res: Response) => {
   const { id } = req.params; 
-  const query = `DELETE FROM transacciones WHERE id = ?`;
+  const user_id = req.user.id;
+  
+  // Validamos que el ID del registro exista Y que pertenezca al usuario logueado
+  const query = `DELETE FROM transacciones WHERE id = ? AND user_id = ?`;
 
-  db.run(query, [id], function(this: import('sqlite3').RunResult, err: Error | null) {
+  db.run(query, [id, user_id], function(this: import('sqlite3').RunResult, err: Error | null) {
     if (err) return res.status(500).json({ error: err.message });
+    
+    // this.changes verifica si realmente se borró alguna fila en SQLite
+    if (this.changes === 0) return res.status(404).json({ error: 'Registro no encontrado o no autorizado' });
+    
     res.json({ mensaje: 'Transacción eliminada correctamente' });
   });
 });
