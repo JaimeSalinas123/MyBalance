@@ -22,7 +22,7 @@ El objetivo de este proyecto fue diseñar, desarrollar y desplegar una aplicaci�
 * **Control Manual y Privado:** Registra cada ingreso y gasto manualmente. Tu información es 100% tuya y no se sincroniza con entidades externas.
 * **Interfaz Estilo Excel:** Visualiza tu flujo de dinero en tablas limpias y organizadas que facilitan la lectura rápida de tu historial.
 * **Autenticación Segura:** Sistema de login y registro para que cada usuario tenga acceso exclusivo a su propio libro de cuentas digital.
-* **Dashboard Financiero:** Un panel visual e intuitivo que calcula automáticamente tus saldos netos y te ofrece un resumen en tiempo real de tu salud financiera.
+* **Dashboard Financiero:** Un panel visual e intuitivo que calcula automáticamente tus saldos netos y te ofrece un resumen en tiempo real y automatico de tu salud financiera.
 
 ---
 
