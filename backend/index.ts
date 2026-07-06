@@ -8,17 +8,15 @@ import db from './database.js';
 
 const app = express();
 
-// 1. Puerto dinámico para Render
 const PORT = process.env.PORT || 3000; 
 
-// 2. Configuración de CORS para seguridad
-// Reemplaza la URL de abajo por la de tu Vercel cuando la tengas
-const corsOptions = {
-  origin: ['https://tu-frontend-en-vercel.vercel.app', 'http://localhost:3000'],
-  credentials: true,
-};
+// Configuración limpia y única de CORS
+app.use(cors({
+  origin: ['https://mybalance-xi.vercel.app'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
-app.use(cors(corsOptions));
 app.use(express.json());
 
 const JWT_SECRET: string = process.env.JWT_SECRET || 'tu_palabra_secreta_super_segura_123';
