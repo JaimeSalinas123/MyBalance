@@ -25,12 +25,13 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        // Si el backend nos rechaza por falta de permisos, limpiamos la sesión
-        if (error.response && error.response.status === 401) {
+        // Atrapamos tanto el 401 como el 403
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
             if (typeof window !== 'undefined') {
+                // Borramos el token fantasma
                 localStorage.removeItem('token');
-                // Si quieres que recargue la página o envíe al login automáticamente, descomenta esto:
-                // window.location.href = '/login';
+                // Redirigimos forzosamente al login para obtener uno nuevo y fresco
+                window.location.href = '/login';
             }
         }
         return Promise.reject(error);
