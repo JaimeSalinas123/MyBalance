@@ -22,11 +22,15 @@ export const verificarToken = (req: AuthRequest, res: Response, next: NextFuncti
     return res.status(401).json({ error: 'Acceso denegado. Token no proporcionado.' });
   }
 
-  try {
+try {
+    // 3. Verificamos la firma del token
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; 
-    console.log("Resultado: Token verificado con éxito para el usuario:", decoded.email);
-    next(); 
+    req.user = decoded; // Guardamos los datos del usuario en la petición
+    
+    // Imprimimos el objeto completo para evitar el error de TypeScript
+    console.log("Resultado: Token verificado con éxito. Payload:", decoded);
+    
+    next(); // Dejamos pasar la petición hacia las transacciones
   } catch (error: any) {
     console.log("Resultado: Falló la verificación del token. Error:", error.message);
     return res.status(403).json({ error: 'Token inválido o expirado.' });
