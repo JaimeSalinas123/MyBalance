@@ -86,7 +86,14 @@ app.get('/api/transacciones', verificarToken, async (req: AuthRequest, res: Resp
   try {
     const query = `SELECT * FROM transacciones WHERE user_id = $1 ORDER BY id DESC`;
     const result = await pool.query(query, [user_id]);
-    res.json(result.rows);
+    
+    // SOLUCIÓN: Convertimos el 'monto' de Texto a Número para que React y .toFixed() no fallen
+    const transaccionesFormateadas = result.rows.map(row => ({
+      ...row,
+      monto: parseFloat(row.monto)
+    }));
+
+    res.json(transaccionesFormateadas);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
