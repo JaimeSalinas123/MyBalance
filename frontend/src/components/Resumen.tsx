@@ -12,10 +12,6 @@ interface Transaccion {
   fecha: string;
 }
 
-// Clases Claymorphism reutilizadas en esta pantalla
-const CLAY_CARD =
-  'bg-white rounded-[24px] shadow-[8px_8px_20px_rgba(26,37,48,0.10),-8px_-8px_20px_rgba(255,255,255,0.9)]';
-
 export default function Resumen() {
   const [periodo, setPeriodo] = useState('Mes');
   const [transacciones, setTransacciones] = useState<Transaccion[]>([]);
@@ -91,37 +87,43 @@ export default function Resumen() {
 
   const datosActuales = calcularDatos();
 
+  const card = {
+    background: '#FFFFFF', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.07)', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+  };
+
+  const labelStyle: React.CSSProperties = {
+    fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase',
+  };
+
   return (
-    <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 flex flex-col gap-5">
+    <div style={{ width: '100%', maxWidth: '900px', margin: '0 auto', padding: '40px 24px 80px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
       {/* ── Hero ── */}
-      <div className="relative w-full overflow-hidden bg-[#1A2530] rounded-[24px] sm:rounded-[28px] p-7 sm:p-9 shadow-[10px_10px_26px_rgba(0,0,0,0.35),-8px_-8px_20px_rgba(255,255,255,0.03)]">
-        <div className="pointer-events-none absolute -top-12 -right-6 w-48 h-48 sm:w-56 sm:h-56 rounded-full bg-[radial-gradient(circle,rgba(72,187,120,0.35)_0%,transparent_68%)]" />
-        <div className="pointer-events-none absolute -bottom-10 left-14 w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.06)_0%,transparent_70%)]" />
+      <div style={{ width: '100%', background: '#0A0F1E', borderRadius: '20px', padding: '32px 36px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-50px', right: '-30px', width: '220px', height: '220px', background: 'radial-gradient(circle, rgba(29,107,243,0.38) 0%, transparent 68%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '-40px', left: '60px', width: '160px', height: '160px', background: 'radial-gradient(circle, rgba(99,179,237,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-        <div className="relative z-[1] flex items-end justify-between flex-wrap gap-5">
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
           <div>
-            <div className="flex items-center gap-[7px] mb-2.5">
-              <span className="text-[11px] font-semibold text-white/40 tracking-[0.08em] uppercase">Análisis</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#48BB78] inline-block animate-pulse motion-reduce:animate-none" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '10px' }}>
+              <span style={labelStyle}>Análisis</span>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22D3EE', display: 'inline-block' }} />
             </div>
-            <h2 className="text-[30px] sm:text-[36px] font-extrabold text-white m-0 tracking-tight leading-none">Resumen</h2>
-            <p className="text-[14px] text-white/40 m-0 mt-2">Desempeño financiero por periodo</p>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#FFFFFF', margin: 0, letterSpacing: '-1px', lineHeight: '1' }}>Resumen</h2>
+            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: '8px 0 0' }}>Desempeño financiero por periodo</p>
           </div>
 
-          <div className="flex items-center gap-1 bg-white/10 rounded-2xl p-1.5">
+          <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '12px', padding: '4px', gap: '2px' }}>
             {['Día', 'Semana', 'Mes'].map((p) => {
               const isActive = periodo === p;
               return (
                 <button
                   key={p}
-                  type="button"
                   onClick={() => setPeriodo(p)}
-                  className={
-                    isActive
-                      ? 'px-4 sm:px-5 py-2 rounded-xl text-[13px] font-bold bg-[#48BB78] text-[#1A2530] shadow-[2px_2px_7px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-150 active:scale-95 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#48BB78] focus-visible:ring-offset-1'
-                      : 'px-4 sm:px-5 py-2 rounded-xl text-[13px] font-semibold text-white/45 hover:text-white/75 transition-colors duration-150 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-1'
-                  }
+                  style={{
+                    padding: '7px 18px', borderRadius: '9px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: 700, fontFamily: 'inherit',
+                    background: isActive ? '#1D6BF3' : 'transparent', color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.45)', transition: 'all 0.15s',
+                  }}
                 >
                   {p}
                 </button>
@@ -131,78 +133,78 @@ export default function Resumen() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
         {/* Ingresos */}
-        <div className={`${CLAY_CARD} p-6`}>
-          <div className="flex items-center gap-2 mb-3.5">
-            <div className="w-2 h-2 rounded-full bg-[#48BB78]" />
-            <span className="text-[11px] font-semibold text-[#94A3AF] uppercase tracking-[0.07em]">Ingresos</span>
+        <div style={{ ...card, padding: '24px 26px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4ADE80' }} />
+            <span style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Ingresos</span>
           </div>
-          <p className="text-[26px] sm:text-[28px] font-extrabold text-[#1A2530] m-0 tracking-tight tabular-nums">${datosActuales.ingresos}</p>
-          <p className="text-[12px] text-[#94A3AF] m-0 mt-1">este periodo</p>
+          <p style={{ fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>${datosActuales.ingresos}</p>
+          <p style={{ fontSize: '12px', color: '#94A3B8', margin: '4px 0 0' }}>este periodo</p>
         </div>
 
         {/* Gastos */}
-        <div className={`${CLAY_CARD} p-6`}>
-          <div className="flex items-center gap-2 mb-3.5">
-            <div className="w-2 h-2 rounded-full bg-[#FCA5A5]" />
-            <span className="text-[11px] font-semibold text-[#94A3AF] uppercase tracking-[0.07em]">Gastos</span>
+        <div style={{ ...card, padding: '24px 26px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F87171' }} />
+            <span style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Gastos</span>
           </div>
-          <p className="text-[26px] sm:text-[28px] font-extrabold text-[#1A2530] m-0 tracking-tight tabular-nums">${datosActuales.gastos}</p>
-          <p className="text-[12px] text-[#94A3AF] m-0 mt-1">este periodo</p>
+          <p style={{ fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>${datosActuales.gastos}</p>
+          <p style={{ fontSize: '12px', color: '#94A3B8', margin: '4px 0 0' }}>este periodo</p>
         </div>
 
         {/* Ahorro */}
-        <div className="relative overflow-hidden bg-[#48BB78] rounded-[24px] p-6 shadow-[8px_8px_20px_rgba(47,133,90,0.28),-6px_-6px_16px_rgba(255,255,255,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)]">
-          <div className="pointer-events-none absolute -top-5 -right-5 w-24 h-24 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.35)_0%,transparent_70%)]" />
-          <div className="relative flex items-center gap-2 mb-3.5">
-            <div className="w-2 h-2 rounded-full bg-[#1A2530]/50" />
-            <span className="text-[11px] font-semibold text-[#1A2530]/70 uppercase tracking-[0.07em]">Ahorro neto</span>
+        <div style={{ background: '#1D6BF3', borderRadius: '20px', padding: '24px 26px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)' }} />
+            <span style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Ahorro neto</span>
           </div>
-          <p className="relative text-[26px] sm:text-[28px] font-extrabold text-[#1A2530] m-0 tracking-tight tabular-nums">${datosActuales.ahorro}</p>
-          <p className="relative text-[12px] text-[#1A2530]/60 m-0 mt-1">este periodo</p>
+          <p style={{ fontSize: '28px', fontWeight: 800, color: '#FFFFFF', margin: 0, letterSpacing: '-0.5px' }}>${datosActuales.ahorro}</p>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', margin: '4px 0 0' }}>este periodo</p>
         </div>
       </div>
 
       {/* Gráfico y Footer */}
-      <div className={`${CLAY_CARD} p-6 sm:p-8`}>
-        <div className="flex items-center justify-between mb-7">
-          <h3 className="text-[15px] font-bold text-[#1A2530] m-0">Ingresos vs Gastos</h3>
-          <span className="text-[11px] font-bold text-[#2F855A] bg-[#DCF6E7] px-3 py-1 rounded-full">Este periodo</span>
+      <div style={{ ...card, padding: '32px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px' }}>
+          <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0F172A', margin: 0 }}>Ingresos vs Gastos</h3>
+          <span style={{ fontSize: '11px', fontWeight: 600, color: '#1D6BF3', background: '#EFF6FF', padding: '4px 12px', borderRadius: '20px' }}>Este periodo</span>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {[
-            { label: 'Ingresos', pct: 100, color: '#48BB78', value: `$${datosActuales.ingresos}` },
+            { label: 'Ingresos', pct: 100, color: '#1D6BF3', value: `$${datosActuales.ingresos}` },
             { label: 'Gastos',   pct: datosActuales.pctGastos, color: '#F87171', value: `$${datosActuales.gastos}` },
-            { label: 'Ahorro',   pct: datosActuales.pctAhorro, color: '#48BB78', value: `$${datosActuales.ahorro}` },
+            { label: 'Ahorro',   pct: datosActuales.pctAhorro, color: '#4ADE80', value: `$${datosActuales.ahorro}` },
           ].map(({ label, pct, color, value }) => (
             <div key={label}>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full inline-block" style={{ background: color }} />
-                  <span className="text-[12px] font-semibold text-[#5B6B78] uppercase tracking-[0.06em]">{label}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: color, display: 'inline-block' }} />
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <span className="text-[13px] font-bold text-[#1A2530] tabular-nums">{value}</span>
-                  <span className="text-[11px] text-[#94A3AF] min-w-[34px] text-right tabular-nums">{pct}%</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#0F172A' }}>{value}</span>
+                  <span style={{ fontSize: '11px', color: '#94A3B8', minWidth: '36px', textAlign: 'right' }}>{pct}%</span>
                 </div>
               </div>
-              <div className="w-full h-[10px] bg-[#EEF1EF] rounded-full overflow-hidden shadow-[inset_2px_2px_5px_rgba(26,37,48,0.08)]">
-                <div className="h-full rounded-full transition-all duration-700 ease-out motion-reduce:transition-none" style={{ width: `${pct}%`, background: color }} />
+              <div style={{ width: '100%', height: '10px', background: '#F1F5F9', borderRadius: '99px', overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${pct}%`, background: color, borderRadius: '99px', transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }} />
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-7 pt-6 border-t border-[#EDF1EF] grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid rgba(0,0,0,0.05)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
           {[
             { label: 'Gasto Promedio Diario', value: datosActuales.promedio },
             { label: 'Mayor Gasto Registrado', value: datosActuales.topGasto },
           ].map(({ label, value }) => (
-            <div key={label} className="bg-[#F5F8F6] rounded-[16px] px-5 py-4">
-              <p className="text-[11px] font-semibold text-[#94A3AF] uppercase tracking-[0.07em] m-0 mb-1.5">{label}</p>
-              <p className="text-[17px] sm:text-[18px] font-extrabold text-[#1A2530] m-0 tracking-tight tabular-nums">{value}</p>
+            <div key={label} style={{ background: '#F8FAFC', borderRadius: '14px', padding: '16px 20px' }}>
+              <p style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 6px' }}>{label}</p>
+              <p style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>{value}</p>
             </div>
           ))}
         </div>

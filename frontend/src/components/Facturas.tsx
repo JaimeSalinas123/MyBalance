@@ -12,13 +12,6 @@ interface Factura {
   fecha: string;
 }
 
-// Clases Claymorphism reutilizadas en esta pantalla
-const CLAY_CARD =
-  'bg-white rounded-[28px] shadow-[8px_8px_20px_rgba(26,37,48,0.10),-8px_-8px_20px_rgba(255,255,255,0.9)]';
-const CLAY_INPUT =
-  'w-full px-4 py-3 bg-[#F3F6F5] rounded-[14px] text-[14px] text-[#1A2530] outline-none shadow-[inset_3px_3px_7px_rgba(26,37,48,0.08),inset_-3px_-3px_7px_rgba(255,255,255,0.8)] focus:shadow-[inset_3px_3px_7px_rgba(26,37,48,0.12),inset_-3px_-3px_7px_rgba(255,255,255,0.8),0_0_0_3px_rgba(47,133,90,0.22)] transition-shadow duration-200 placeholder:text-[#B0BAC2]';
-const CLAY_LABEL = 'block text-[11px] font-semibold text-[#5B6B78] mb-2 uppercase tracking-[0.07em]';
-
 export default function Facturas() {
   const [facturas, setFacturas] = useState<Factura[]>([]);
   const [form, setForm] = useState({ concepto: '', monto: '', fecha: '' });
@@ -72,105 +65,105 @@ export default function Facturas() {
 
   const total = facturas.reduce((acc, f) => acc + f.monto, 0);
 
+  const card = {
+    background: '#FFFFFF', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.07)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+  };
+  
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '12px 14px', background: '#F8FAFC', border: '1.5px solid #E2E8F0', borderRadius: '12px', fontSize: '14px', color: '#0F172A', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
+  };
+  
+  const labelStyle: React.CSSProperties = {
+    display: 'block', fontSize: '11px', fontWeight: 600, color: '#64748B', marginBottom: '7px', textTransform: 'uppercase', letterSpacing: '0.07em',
+  };
+
   return (
-    <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 sm:pb-20 flex flex-col gap-5">
+    <div style={{ width: '100%', maxWidth: '900px', margin: '0 auto', padding: '40px 24px 80px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       
       {/* Hero */}
-      <div className="relative w-full overflow-hidden bg-[#1A2530] rounded-[24px] sm:rounded-[28px] p-7 sm:p-9 shadow-[10px_10px_26px_rgba(0,0,0,0.35),-8px_-8px_20px_rgba(255,255,255,0.03)]">
-        <div className="pointer-events-none absolute -top-12 -right-6 w-48 h-48 sm:w-56 sm:h-56 rounded-full bg-[radial-gradient(circle,rgba(72,187,120,0.35)_0%,transparent_68%)]" />
-        <div className="relative z-[1] flex items-end justify-between flex-wrap gap-5">
+      <div style={{ width: '100%', background: '#0A0F1E', borderRadius: '20px', padding: '32px 36px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-50px', right: '-30px', width: '220px', height: '220px', background: 'radial-gradient(circle, rgba(29,107,243,0.38) 0%, transparent 68%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
           <div>
-            <div className="flex items-center gap-[7px] mb-2.5">
-              <span className="text-[11px] font-semibold text-white/40 tracking-[0.08em] uppercase">Historial</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#48BB78] inline-block animate-pulse motion-reduce:animate-none" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '10px' }}>
+              <span style={{ fontSize: '11px', fontWeight: '600', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Historial</span>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22D3EE', display: 'inline-block' }} />
             </div>
-            <h2 className="text-[30px] sm:text-[36px] font-extrabold text-white m-0 tracking-tight leading-none">Mis Facturas</h2>
-            <p className="text-[14px] text-white/40 m-0 mt-2">Registros y recibos de tus movimientos</p>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#FFFFFF', margin: 0, letterSpacing: '-1px', lineHeight: '1' }}>Mis Facturas</h2>
+            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: '8px 0 0' }}>Registros y recibos de tus movimientos</p>
           </div>
-          <div className="flex items-center gap-5">
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             <div>
-              <div className="text-[10px] text-white/40 mb-[3px] uppercase tracking-[0.06em]">Registros</div>
-              <div className="text-[20px] sm:text-[22px] font-bold text-white tabular-nums">{facturas.length}</div>
+              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.38)', marginBottom: '3px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Registros</div>
+              <div style={{ fontSize: '22px', fontWeight: 700, color: '#FFFFFF' }}>{facturas.length}</div>
             </div>
-            <div className="w-px h-7 bg-white/10" />
+            <div style={{ width: '1px', height: '28px', background: 'rgba(255,255,255,0.08)' }} />
             <div>
-              <div className="text-[10px] text-white/40 mb-[3px] uppercase tracking-[0.06em]">Total</div>
-              <div className="text-[20px] sm:text-[22px] font-bold text-[#F87171] tabular-nums">$-{total.toFixed(2)}</div>
+              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.38)', marginBottom: '3px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Total</div>
+              <div style={{ fontSize: '22px', fontWeight: 700, color: '#F87171' }}>$-{total.toFixed(2)}</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Formulario */}
-      <div className={`${CLAY_CARD} p-6 sm:p-8`}>
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-[14px] bg-[#48BB78] flex items-center justify-center shrink-0 shadow-[3px_3px_8px_rgba(47,133,90,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)]">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 4V14M4 9H14" stroke="#1A2530" strokeWidth="2.2" strokeLinecap="round"/></svg>
+      <div style={{ ...card, padding: '28px 32px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#1D6BF3', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 4V14M4 9H14" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>
           </div>
           <div>
-            <h3 className="text-[16px] font-bold text-[#1A2530] m-0">Agregar Factura</h3>
-            <p className="text-[13px] text-[#8A97A3] m-0">Registra un nuevo gasto</p>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#0F172A', margin: 0 }}>Agregar Factura</h3>
+            <p style={{ fontSize: '13px', color: '#94A3B8', margin: 0 }}>Registra un nuevo gasto</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', alignItems: 'end' }}>
           <div>
-            <label className={CLAY_LABEL}>Nombre</label>
-            <input name="concepto" type="text" placeholder="Ej. Factura de luz" value={form.concepto} onChange={handleChange} className={CLAY_INPUT} />
+            <label style={labelStyle}>Nombre</label>
+            <input name="concepto" type="text" placeholder="Ej. Factura de luz" value={form.concepto} onChange={handleChange} style={inputStyle} />
           </div>
           <div>
-            <label className={CLAY_LABEL}>Costo ($)</label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[14px] font-semibold text-[#94A3AF]">$</span>
-              <input name="monto" type="number" placeholder="0.00" value={form.monto} onChange={handleChange} className={`${CLAY_INPUT} pl-8 font-semibold`} />
+            <label style={labelStyle}>Costo ($)</label>
+            <div style={{ position: 'relative' }}>
+              <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '14px', fontWeight: 600, color: '#94A3B8' }}>$</span>
+              <input name="monto" type="number" placeholder="0.00" value={form.monto} onChange={handleChange} style={{ ...inputStyle, paddingLeft: '28px', fontWeight: 600 }} />
             </div>
           </div>
           <div>
-            <label className={CLAY_LABEL}>Fecha</label>
-            <input name="fecha" type="date" value={form.fecha} onChange={handleChange} className={CLAY_INPUT} />
+            <label style={labelStyle}>Fecha</label>
+            <input name="fecha" type="date" value={form.fecha} onChange={handleChange} style={inputStyle} />
           </div>
         </div>
 
-        {error && (
-          <div className="flex items-center gap-2 mt-4 px-4 py-2.5 rounded-[12px] bg-[#FEF2F2] text-[#DC2626] text-[13px] font-semibold">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg>
-            {error}
-          </div>
-        )}
+        {error && <p style={{ fontSize: '13px', color: '#EF4444', margin: '12px 0 0', fontWeight: 500 }}>{error}</p>}
 
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="mt-5 px-7 py-3.5 rounded-[14px] bg-[#48BB78] text-[#1A2530] text-[14px] font-bold shadow-[5px_5px_12px_rgba(47,133,90,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] hover:brightness-[1.03] active:scale-[0.97] active:shadow-[inset_3px_3px_7px_rgba(0,0,0,0.15)] transition-all duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A] focus-visible:ring-offset-2"
-        >
+        <button onClick={handleAdd} style={{ marginTop: '18px', padding: '13px 28px', background: '#1D6BF3', color: '#FFFFFF', fontSize: '14px', fontWeight: 700, borderRadius: '12px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '-0.1px' }}>
           Guardar Factura
         </button>
       </div>
 
-      {/* Lista de facturas */}
-      <div className={`${CLAY_CARD} p-3 sm:p-4`}>
+      {/* Tabla */}
+      <div style={card}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', padding: '13px 28px', background: '#F8FAFC', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+          {['Fecha', 'Nombre', 'Costo'].map((col, i) => (
+            <div key={col} style={{ fontSize: '10px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.07em', textAlign: i === 2 ? 'right' : 'left' }}>{col}</div>
+          ))}
+        </div>
+
         {facturas.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-12 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-[#F3F6F5] flex items-center justify-center shadow-[inset_3px_3px_7px_rgba(26,37,48,0.07),inset_-3px_-3px_7px_rgba(255,255,255,0.8)]">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B0BAC2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 3h10a1 1 0 0 1 1 1v16l-3-2-2 2-2-2-2 2-3-2V4a1 1 0 0 1 1-1Z" /><path d="M9 8h6M9 12h6" /></svg>
-            </div>
-            <p className="text-[14px] text-[#94A3AF] font-medium">No hay facturas aún. ¡Agrega la primera!</p>
-          </div>
+          <div style={{ padding: '40px', textAlign: 'center', color: '#CBD5E1', fontSize: '14px' }}>No hay facturas aún. ¡Agrega la primera!</div>
         ) : (
-          <div className="flex flex-col gap-2.5">
-            {facturas.map((f) => (
-              <div key={f.id} className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 sm:py-4 bg-[#F5F8F6] rounded-[16px] shadow-[3px_3px_8px_rgba(26,37,48,0.05),-3px_-3px_8px_rgba(255,255,255,0.7)]">
-                <div className="flex items-center gap-3 min-w-0">
-                  <span className="w-2 h-2 rounded-full bg-[#FCA5A5] shrink-0" />
-                  <div className="min-w-0">
-                    <div className="text-[14px] sm:text-[15px] font-semibold text-[#1A2530] truncate max-w-[140px] sm:max-w-[300px]">{f.concepto}</div>
-                    <div className="text-[11px] text-[#94A3AF] mt-[2px]">{f.fecha}</div>
-                  </div>
-                </div>
-                <div className="text-[14px] sm:text-[15px] font-bold text-[#DC2626] tabular-nums shrink-0">−${f.monto.toFixed(2)}</div>
+          facturas.map((f, idx) => (
+            <div key={f.id} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', padding: '17px 28px', alignItems: 'center', borderBottom: idx < facturas.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#FCA5A5', flexShrink: 0 }} />
+                <span style={{ fontSize: '13px', color: '#94A3B8', fontWeight: 500 }}>{f.fecha}</span>
               </div>
-            ))}
-          </div>
+              <div style={{ fontSize: '15px', fontWeight: 600, color: '#0F172A' }}>{f.concepto}</div>
+              <div style={{ textAlign: 'right', fontSize: '15px', fontWeight: 700, color: '#EF4444' }}>−${f.monto.toFixed(2)}</div>
+            </div>
+          ))
         )}
       </div>
 
